@@ -1,0 +1,9 @@
+streamlit
+numpy
+pillow
+pymongo
+gdown
+googletrans==4.0.0-rc1
+requests
+beautifulsoup4
+tensorflow-cpu
