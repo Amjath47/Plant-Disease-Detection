@@ -2,15 +2,21 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 import sys
 import os
+from dotenv import load_dotenv
 from utils.predict import predict_disease
 from utils.translate import deep_translate
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 frontend_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend")
 app = Flask(__name__, static_folder=frontend_folder, static_url_path="/")
 
+load_dotenv()
 
-# MongoDB
-client = MongoClient("mongodb+srv://LeafDisease:yasisvQUPDZlzrdX@cluster0.sausgkt.mongodb.net/")
+MONGO_URI = os.getenv("MONGO_URI")
+
+if not MONGO_URI:
+    raise ValueError("MONGO_URI is not configured")
+
+client = MongoClient(MONGO_URI)
 db = client["diseasedb"]
 collection = db["leafdisease"]
 

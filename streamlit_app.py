@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+from dotenv import load_dotenv
 import tempfile
 from PIL import Image
 
@@ -11,8 +12,15 @@ except ModuleNotFoundError:
 
 from pymongo import MongoClient
 
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
+
+if not MONGO_URI:
+    raise ValueError("MONGO_URI is not configured")
+
 # MongoDB setup
-client = MongoClient("mongodb+srv://LeafDisease:yasisvQUPDZlzrdX@cluster0.sausgkt.mongodb.net/")
+client = MongoClient("MONGO_URI")
 db = client["diseasedb"]
 collection = db["leafdisease"]
 
